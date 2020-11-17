@@ -1,0 +1,22 @@
+Metadata-Version: 2.1
+Name: ishell
+Version: 0.1.8
+Summary: Build Interactive Shells with Python
+Home-page: http://github.com/italorossi/ishell
+Author: Ítalo Rossi
+Author-email: italorossib@gmail.com
+License: MIT
+Keywords: cli terminal console shell interactive
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Topic :: Utilities
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: License :: OSI Approved :: MIT License
+Requires-Dist: gnureadline
+Requires-Dist: future
+
+Build Interactive Shells with Python
+
+

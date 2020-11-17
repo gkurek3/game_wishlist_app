@@ -1,0 +1,42 @@
+{% extends 'base1.html' %}
+{% block content %}
+        <h3>LIST OF USERS</h3>
+    <table class="table">
+
+        <thead>
+        <tr class="d-flex">
+            <th class="col-2">USER</th>
+            <th class="col-7"></th>
+            <th class="col-1"></th>
+            <th class="col-2"></th>
+
+        </tr>
+        </thead>
+        <tbody class="text-color-lighter">
+        {% for user in users %}
+            <tr class="d-flex">
+
+                <td class="col-2"><a href="{% url 'user-profile' user.id %}">{{ user.username }}</a></td>
+
+{#                {% for key, value in average.items %}#}
+{#                    {% if key == game.game.title %}#}
+{#                        <td>{{ value }}</td>#}
+{#                    {% endif %}#}
+{#                {% endfor %}#}
+
+{#            {% if not user.is_superuser %}#}
+{#                <td class="col-1 center">#}
+{#                    <form method="post">#}
+{#                        <input type="hidden" name="user_delete" value={{ user.id }}>#}
+{#                        <input type="submit" class="btn btn-danger rounded-0 text-light m-1" value="Delete">#}
+{#                        {% csrf_token %}#}
+{#                    </form>#}
+{#                </td>#}
+{#            {% endif %}#}
+            </tr>
+        {% endfor %}
+
+
+    </table>
+
+{% endblock %}

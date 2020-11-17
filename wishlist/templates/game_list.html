@@ -1,0 +1,79 @@
+{% extends 'base1.html' %}
+{% block content %}
+    <h3>LIST OF GAMES</h3>
+    <form method="get">
+    <label for="category">Choose category:</label>
+    <select name="category" id="category">
+        <option></option>
+        {% for category in categories %}
+        <option value="{{ category.name }}">{{ category.name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit"
+                class="btn btn-color rounded-0 pt-0 pb-0 pr-4 pl-4">
+            Choose
+        </button><br>
+{#            <p>Sort by:#}
+{#            <input type="hidden" name="sort_a_z" value='sort_a_z'>#}
+{#            <input type="submit" name="sort" class="btn btn-danger rounded-0 text-light m-1" value="A -> Z">#}
+{#            <input type="hidden" name="sort_z_a" value='sort_z_a'>#}
+{#            <input type="submit" name="sort" class="btn btn-danger rounded-0 text-light m-1" value="Z -> A">#}
+{#        </p>#}
+    </form>
+    <table class="table">
+
+        <thead>
+        <tr class="d-flex">
+            <th class="col-2">GAME</th>
+            <th class="col-7">CATEGORY</th>
+            <th class="col-1">RATING</th>
+            <th class="col-2"></th>
+
+        </tr>
+        </thead>
+        <tbody class="text-color-lighter">
+        {% for game in page_obj %}
+            <tr class="d-flex">
+
+                <td class="col-2"><a href="{% url 'game-details' game.id %}">{{ game.title }}</a></td>
+                <td class="col-7">{{ game.category }}</td>
+
+                {% for key, value in average.items %}
+                    {% if key == game.title %}
+                        <td class="col-1">{{ value }}</td>
+                    {% endif %}
+                {% endfor %}
+
+            {% if user.is_superuser %}
+                <td class="col-2 center">
+                    <form method="post">
+                        <input type="hidden" name="game_delete" value={{ game.id }}>
+                        <input type="submit" class="btn btn-danger rounded-0 text-light m-1" value="Delete">
+                        {% csrf_token %}
+                    </form>
+                </td>
+            {% endif %}
+            </tr>
+        {% endfor %}
+
+
+    </table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

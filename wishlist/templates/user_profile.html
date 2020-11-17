@@ -1,0 +1,79 @@
+{% extends 'base1.html' %}
+{% block content %}
+
+{#    <a href="{% url 'change-password' user.id %}" class="btn btn-color rounded-0 pt-0 pb-0 pr-4 pl-4">Change password</a>#}
+    <p><b>{{ profile_user }}'s game wishlist</b></p>
+    <br>
+    <p><b>First name: {{ profile_user.first_name }}</b></p>
+    <br>
+    <p><b>Last name: {{ profile_user.last_name }}</b></p>
+    <br>
+    <form method="get">
+        <p>Sort by:
+            <input type="hidden" name="sort_desc" value='sort_desc'>
+            <input type="submit" name="sort" class="btn btn-danger rounded-0 text-light m-1"
+                   value="Priority descending">
+            <input type="hidden" name="sort_asc" value='sort_asc'>
+            <input type="submit" name="sort" class="btn btn-danger rounded-0 text-light m-1" value="Priority ascending">
+{#            <input type="hidden" name="sort_rate_asc" value='sort_rate_asc'>#}
+{#            <input type="submit" name="sort" class="btn btn-danger rounded-0 text-light m-1" value="Rating ascending">#}
+{#            <input type="hidden" name="sort_rate_desc" value='sort_rate_desc'>#}
+{#            <input type="submit" name="sort" class="btn btn-danger rounded-0 text-light m-1" value="Rating descending">#}
+        </p>
+
+        {% csrf_token %}
+    </form>
+    <table class="table">
+
+        <thead>
+        <tr class="d-flex">
+            <th class="col-2">GAME</th>
+            <th class="col-7">PRIORITY</th>
+            <th class="col-1">RATING</th>
+            <th class="col-2"></th>
+
+        </tr>
+        </thead>
+        <tbody class="text-color-lighter">
+        {% for game in page_obj %}
+            <tr class="d-flex">
+
+                <td class="col-2"><a href="{% url 'game-details' game.game_id %}">{{ game.game }}</a></td>
+                <td class="col-7">{{ game.get_wish_display }}</td>
+
+                {% for key, value in average.items %}
+                    {% if key == game.game.title %}
+                        <td>{{ value }}</td>
+                    {% endif %}
+                {% endfor %}
+
+                <td class="col-1 center">
+                    <form method="post">
+                        <input type="hidden" name="game_delete" value={{ game.id }}>
+                        <input type="submit" class="btn btn-danger rounded-0 text-light m-1" value="Delete">
+                        {% csrf_token %}
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+
+
+    </table>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

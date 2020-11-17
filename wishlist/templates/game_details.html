@@ -1,0 +1,80 @@
+{% extends 'base1.html' %}
+{% block content %}
+<p>Rates average: <b><i>{{ average.rating }}</i></b></p>
+<p>Title: <b><i>{{ game.title }}</i></b></p>
+<p>Release year: <b>{{ game.year }}</b></p>
+<p>Category: <b>{{ game.category }}</b></p>
+
+<form method="post">
+    <div class="form-group row">
+        <label for="wish"
+               class="col-sm-2 label-size col-form-label">
+            Do you want to play?
+        </label>
+        <div class="col-sm-3">
+            <select name="wish" id="wish" class="form-control">
+                <option>Not interested</option>
+                <option>Maybe I'll play</option>
+                <option>I want to play</option>
+                <option>I must play!</option>
+            </select>
+        </div>
+        <button type="submit"
+                class="btn btn-color rounded-0 pt-0 pb-0 pr-4 pl-4">
+            Add choice
+        </button>
+
+    </div>
+    <div class="form-group row">
+        <label for="rate"
+               class="col-sm-2 label-size col-form-label">
+            Your Rate:
+        </label>
+        <div class="col-sm-3">
+            <select name="rate" id="rate" class="form-control">
+                <option disabled selected value> -- select an option -- </option>
+                <option>0.5</option>
+                <option>1.0</option>
+                <option>1.5</option>
+                <option>2.0</option>
+                <option>2.5</option>
+                <option>3.0</option>
+                <option>3.5</option>
+                <option>4.0</option>
+                <option>4.5</option>
+                <option>5.0</option>
+                <option>5.5</option>
+                <option>6.0</option>
+                <option>6.5</option>
+                <option>7.0</option>
+                <option>7.5</option>
+                <option>8.0</option>
+                <option>8.5</option>
+                <option>9.0</option>
+                <option>9.5</option>
+                <option>10.0</option>
+            </select>
+        </div>
+        <button type="submit"
+                class="btn btn-color rounded-0 pt-0 pb-0 pr-4 pl-4">
+            Rate
+        </button></div>
+    <div class="row d-flex">
+
+            <div class="col-5 p-4">
+                <label for="comment">Comment:</label>
+                <textarea class="w-100 p-1" rows="5" name="comment"></textarea>
+                <button type="submit"
+                        class="btn btn-color rounded-0 pt-0 pb-0 pr-4 pl-4">
+                    Add comment
+                </button>
+            </div>
+    </div>
+    <ul><b>COMMENTS</b>
+    {% for comment in comments %}
+        <li><i><a href="{% url 'user-profile' comment.user_id %}">{{ comment.user }}</a></i> - {{ comment }}</li>
+    {% endfor %}
+    </ul>
+        {% csrf_token %}
+</form>
+{% endblock %}
